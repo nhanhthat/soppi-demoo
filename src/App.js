@@ -11,7 +11,7 @@ function App() {
   const [reload, setReload] = useState(false)
   useEffect(() => {
     setTimeout(() => {
-      axios.get('http://localhost:5555/get-length')
+      axios.get('https://sansalesapsan.online/get-length')
       .then (res => {
         if (res.data.number != 0) {
           setIsRun(!isRun)
@@ -24,7 +24,7 @@ function App() {
   }, [reload])
   
   useEffect(() => {
-    axios.get('http://localhost:5555/get-links')
+    axios.get('https://sansalesapsan.online/get-links')
       .then (res => {
         if (res.data.length != 0) {
           let num = res.data[0].queue
@@ -46,13 +46,13 @@ function App() {
   useEffect(() => {
     if (link != undefined) {
       console.log(link)
-      axios.post('http://localhost:5555/api/live_x', {link : link.content})
+      axios.post('https://sansalesapsan.online/api/live_x', {link : link.content})
         .then (res => {
           let result = res.data.success
           if (result == true) {
-            axios.post('http://localhost:5555/update-status', {queue : link.queue, status : 'success'})
+            axios.post('https://sansalesapsan.online/update-status', {queue : link.queue, status : 'success'})
               .then(() => {
-                axios.get('http://localhost:5555/get-link-by-queue?queue='+ link.queue)
+                axios.get('https://sansalesapsan.online/get-link-by-queue?queue='+ link.queue)
                   .then(res => {
                     if (res.data.length != 1) {
                       setReload(!reload)
@@ -61,9 +61,9 @@ function App() {
                   })
               })
           } else {
-            axios.post('http://localhost:5555/update-status', {queue : link.queue, status : 'fail'})
+            axios.post('https://sansalesapsan.online/update-status', {queue : link.queue, status : 'fail'})
               .then(() => {
-                axios.get('http://localhost:5555/get-link-by-queue?queue='+ link.queue)
+                axios.get('https://sansalesapsan.online/get-link-by-queue?queue='+ link.queue)
                   .then(res => {
                     if (res.data.length != 1) {
                       setReload(!reload)
